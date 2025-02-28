@@ -10,14 +10,15 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import Footer from "./components/Footer/Footer";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-
+      <Sidebar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
 
         <Route
           path="/profile"
@@ -37,7 +38,7 @@ function App() {
           }
         />
         <Route
-          path="/login"
+          path="/"
           element={
             <IsAnon>
               <LoginPage />
