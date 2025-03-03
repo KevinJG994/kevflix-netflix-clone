@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Routes>
         <Route path="/home" element={<HomePage />} />
 

@@ -8,6 +8,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [showLogin, setShowLogin] = useState(true); // Estado para controlar qué formulario se muestra
 
   const navigate = useNavigate();
 
@@ -20,28 +21,22 @@ function LoginPage() {
     e.preventDefault();
     const requestBody = { email, password };
 
-    // Send a request to the server using axios
-    /* 
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`)
-      .then((response) => {})
-    */
-
-    // Or using a service
     authService
       .login(requestBody)
       .then((response) => {
-        // If the POST request is successful store the authentication token,
-        // after the token is stored authenticate the user
-        // and at last navigate to the home page
         storeToken(response.data.authToken);
         authenticateUser();
         navigate("/");
       })
       .catch((error) => {
-        // If the request resolves with an error, set the error message in the state
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
       });
+  };
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    // Lógica para manejar el registro
   };
 
   return (
@@ -63,62 +58,66 @@ function LoginPage() {
             Disfruta de tu sitio web de streaming favorito en el que podrás ver la mejor selección de películas y series online gratis desde cualquier dispositivo en la mejor calidad, sin cortes y con unas gran variedad de idiomas.
           </p>
           <p className='py-6 text-xl'>
-            Inicia sesión para acceder a todo el contenido que ofrece KevFlix.
+            {showLogin ? "Inicia sesión para acceder a todo el contenido que ofrece KevFlix." : "Crea una cuenta para disfrutar de todo el contenido que ofrece KevFlix."}
           </p>
-
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-
-          {/* Formulario para Iniciar Sesión */}
-          <form className="card-body" onSubmit={handleLoginSubmit}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text" value={email} onChange={handleEmail}>Email</span>
-              </label>
-              <input type="email" placeholder="email" className="input input-bordered" required />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text" value={password}
-                  onChange={handlePassword}>Password</span>
-              </label>
-              <input type="password" placeholder="password" className="input input-bordered" required />
-            </div>
-            <div className="form-control mt-6">
-              {errorMessage && <p className="error-message">{errorMessage}</p>}
-              <button className="btn btn-primary">Login</button>
-              <label className="label">
-                <a href="#" onClick={() => document.getElementById('my_modal_3').showModal()} className="text-lg flex-auto my-2 label-text-alt link link-hover">¿No tienes cuenta? - <span className='text-primary-color'>Registrate</span></a>
-              </label>
-
-              {/* Abrir Modal */}
-              <dialog id="my_modal_3" className="modal">
-                <div className="modal-box">
-                  <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                  </form>
-                  <h3 className="font-bold text-lg">Crear Cuenta</h3>
-                  <form className="card-body">
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Email</span>
-                      </label>
-                      <input type="email" placeholder="email" className="input input-bordered" required />
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Password</span>
-                      </label>
-                      <input type="password" placeholder="password" className="input input-bordered" required />
-                    </div>
-                    <div className="form-control mt-6">
-                      <button className="btn btn-primary">Crear cuenta</button>
-                    </div>
-                  </form>
-                </div>
-              </dialog>
-            </div>
-          </form>
+          {showLogin ? (
+            <form className="card-body" onSubmit={handleLoginSubmit}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input type="email" placeholder="Email" className="input input-bordered" value={email} onChange={handleEmail} required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Contraseña</span>
+                </label>
+                <input type="password" placeholder="Contraseña" className="input input-bordered" value={password} onChange={handlePassword} required />
+              </div>
+              <div className="form-control mt-6">
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <button className="btn btn-primary">Login</button>
+                <label className="label">
+                  <a href="#" onClick={() => setShowLogin(false)} className="text-lg flex-auto my-2 label-text-alt link link-hover">¿No tienes cuenta? - <span className='text-primary-color'>Registrate</span></a>
+                </label>
+              </div>
+            </form>
+          ) : (
+            <form className="card-body" onSubmit={handleRegisterSubmit}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Nombre</span>
+                </label>
+                <input type="text" placeholder="Nombre" className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input type="email" placeholder="Email" className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Contraseña</span>
+                </label>
+                <input type="password" placeholder="Contraseña" className="input input-bordered" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Foto de perfil</span>
+                </label>
+                <input type="file" placeholder="Foto de perfil" className="input input-bordered" required />
+              </div>
+              <div className="form-control mt-6">
+                <button className="btn btn-primary">Crear cuenta</button>
+                <label className="label">
+                  <a href="#" onClick={() => setShowLogin(true)} className="text-lg flex-auto my-2 label-text-alt link link-hover">¿Ya tienes cuenta? - <span className='text-primary-color'>Inicia sesión</span></a>
+                </label>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
