@@ -7,7 +7,6 @@ import "./HomePage.css";
 function HomePage() {
   return (
     <div className="flex min-h-screen">
-      <Sidebar className="w-1/4" />
       <div className="w-4/4 ml-[70px]">
         <Carrousel />
         <div className="p-6">
