@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Card() {
     return (
-        <div className="relative w-96 shadow-xl overflow-hidden group">
+        <div className="relative w-96 shadow-xl overflow-hidden group mb-6">
             <figure>
                 <img
                     src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
