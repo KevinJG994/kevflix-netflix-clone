@@ -6,3 +6,8 @@
 .App {
   text-align: center;
 }
+
+.calc-width {
+  width: calc(100% - 70px);
+  margin-left: 70px;
+}
