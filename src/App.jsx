@@ -14,6 +14,8 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import FavouritePage from "./pages/FavouritePage/FavouritePage";
 import SeriePage from "./pages/SeriePage/SeriePage";
+import MovieDetails from "./pages/MovieDetails/MovieDetails";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const location = useLocation();
@@ -29,6 +31,8 @@ function App() {
             <Route path="/movies" element={<MoviePage />} />
             <Route path="/series" element={<SeriePage />} />
             <Route path="/favourites" element={<FavouritePage />} />
+            <Route path="/movieDetails" element={<MovieDetails />} />
+            <Route path="*" element={<NotFoundPage />} />
             <Route
               path="/profile"
               element={
