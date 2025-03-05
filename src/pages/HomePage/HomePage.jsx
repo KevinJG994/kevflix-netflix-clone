@@ -1,7 +1,5 @@
-
 import Card from "../../components/Card/Card";
 import Carrousel from "../../components/Carrousel/Carrousel";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import "./HomePage.css";
 
 function HomePage() {

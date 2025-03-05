@@ -33,14 +33,16 @@ function App() {
             <Route path="/favourites" element={<FavouritePage />} />
             <Route path="/movieDetails" element={<MovieDetails />} />
             <Route path="*" element={<NotFoundPage />} />
-            <Route
+            <Route path="/profile" element={<ProfilePage/>} />
+           
+           {/* <Route
               path="/profile"
               element={
                 <IsPrivate>
                   <ProfilePage />
                 </IsPrivate>
               }
-            />
+            />  */}
 
             <Route
               path="/signup"
