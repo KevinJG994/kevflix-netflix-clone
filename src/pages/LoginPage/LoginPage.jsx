@@ -1,4 +1,4 @@
-import "./LoginPage.css";
+import "../../App.css";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
@@ -41,7 +41,7 @@ function LoginPage() {
 
   return (
     <div
-      className="hero min-h-screen"
+      className="hero min-h-screen calc-width-navbar"
       style={{
         backgroundImage: "url(https://www.teleadhesivo.com/blog/wp-content/uploads/2022/06/los-mejores-posters-de-pel%C3%ADculas.jpg)",
         backgroundSize: 'cover',
@@ -61,7 +61,7 @@ function LoginPage() {
             {showLogin ? "Inicia sesión para acceder a todo el contenido que ofrece KevFlix." : "Crea una cuenta para disfrutar de todo el contenido que ofrece KevFlix."}
           </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-6">
           {showLogin ? (
             <form className="card-body" onSubmit={handleLoginSubmit}>
               <div className="form-control">

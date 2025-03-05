@@ -1,15 +1,15 @@
-import "./ProfilePage.css";
+import "../../App.css";
 
 function ProfilePage() {
   return (
-    <div className="hero bg-base-100 min-h-screen flex flex-col items-center">
-      <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20">
-        <div className="flex flex-col items-center lg:items-start">
+    <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
+      <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto calc-width">
+        <div className="flex flex-col items-center lg:items-center">
           <img
             src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
             className="max-w-sm rounded-lg shadow-2xl"
           />
-          <div className="flex justify-center lg:justify-start mt-4">
+          <div className="flex justify-center mt-4">
             <button
               className="btn btn-primary mr-4"
               title="Edit info"
@@ -30,12 +30,9 @@ function ProfilePage() {
 
         <div className="lg:ml-10 mt-6 lg:mt-0 flex flex-col items-center lg:items-start">
           <h1 className="text-4xl font-bold text-primary-color">User Name</h1>
-          <p className="text-lg mt-2">Email: Jon Watts</p>
           <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
-            <p className="text-lg">Favorite contect: 7.4</p>
-            <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
-            <p className="text-lg">Favourite Genders: 2h 13m</p>
-            <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
+            <p className="text-lg">Email: Jon Watts</p>
+            <div className="hidden lg:block border-l-2 border-primary-color h-6 mx-4"></div>
             <p className="text-lg">Te uniste en: 2017</p>
           </div>
         </div>

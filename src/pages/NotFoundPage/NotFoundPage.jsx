@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import "./NotFoundPage.css";
+import "../../App.css";
 
 function NotFoundPage() {
   return (
-    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto">
+    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
       <h2 className="text-3xl">Page Not Found</h2>
    
       <img src="/images/404.gif" className="my-10 mx-auto"/>

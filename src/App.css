@@ -11,3 +11,7 @@
   width: calc(100% - 70px);
   margin-left: 70px;
 }
+
+.calc-width-navbar {
+  margin-top: 65px;
+}

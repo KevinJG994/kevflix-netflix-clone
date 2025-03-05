@@ -65,7 +65,7 @@ export default function SeriePage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto">
+    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
       <h2 className="text-3xl mb-6 ml-12 text-center md:text-left">
         Últimas Series
       </h2>

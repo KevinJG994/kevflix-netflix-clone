@@ -1,9 +1,9 @@
 import React from "react";
-
+import "../../App.css";
 export default function MovieDetails() {
   return (
-    <div className="hero bg-base-100 min-h-screen flex flex-col items-center">
-    <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20">
+    <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
+    <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20 calc-width">
       <div className="flex flex-col items-center lg:items-start">
         <img
           src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"

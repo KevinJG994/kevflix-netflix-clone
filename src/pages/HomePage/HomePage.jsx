@@ -1,11 +1,10 @@
 import Card from "../../components/Card/Card";
 import Carrousel from "../../components/Carrousel/Carrousel";
-import "./HomePage.css";
 
 function HomePage() {
   return (
-    <div className="flex min-h-screen">
-      <div className="w-4/4 ml-[70px]">
+    <div className="flex min-h-screen calc-width-navbar">
+      <div className="calc-width">
         <Carrousel />
         <div className="p-6">
           <h2 className="text-2xl font-bold my-8 flex">Nuestras Películas</h2>
