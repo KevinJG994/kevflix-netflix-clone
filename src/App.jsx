@@ -16,6 +16,7 @@ import FavouritePage from "./pages/FavouritePage/FavouritePage";
 import SeriePage from "./pages/SeriePage/SeriePage";
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import AdminForm from "./components/AdminForm/AdminForm";
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
             <Route path="/movieDetails" element={<MovieDetails />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/profile" element={<ProfilePage/>} />
+            <Route path="/createdElement" element={<AdminForm />} />
            
            {/* <Route
               path="/profile"

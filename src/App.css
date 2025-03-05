@@ -15,3 +15,9 @@
 .calc-width-navbar {
   margin-top: 65px;
 }
+
+.sidebar-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import "../../App.css";
+import { Link } from "react-router-dom";
 export default function MoviePage() {
   const movies = [
     {
@@ -73,24 +74,28 @@ export default function MoviePage() {
       <div className="calc-width">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {movies.map((item, index) => (
-            <div
-              key={index}
-              className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group"
-            >
-              <figure className="w-full h-full">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-              </figure>
-              <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-lg mb-2">{item.title}</p>
-                <button className="bg-white text-black px-4 py-2 rounded-lg">
-                  {item.year}
-                </button>
+
+            <Link to="/movieDetails">
+              <div
+                key={index}
+                className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group"
+              >
+                <figure className="w-full h-full">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </figure>
+                <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white text-lg mb-2">{item.title}</p>
+                  <button className="bg-white text-black px-4 py-2 rounded-lg">
+                    {item.year}
+                  </button>
+                </div>
               </div>
-            </div>
+            </Link>
+            
           ))}
         </div>
       </div>
