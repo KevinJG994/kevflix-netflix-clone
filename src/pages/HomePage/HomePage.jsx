@@ -4,7 +4,7 @@ import Carrousel from "../../components/Carrousel/Carrousel";
 function HomePage() {
   return (
     <div className="flex min-h-screen calc-width-navbar">
-      <div className="calc-width">
+      <div className="calc-width w-full">
         <Carrousel />
         <div className="p-6">
           <h2 className="text-2xl font-bold my-8 flex">Nuestras Películas</h2>

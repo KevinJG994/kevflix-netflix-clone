@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10 z-20 relative">
+    <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10 z-0 relative calc-width">
       <aside className="flex flex-col items-center m-auto">
         <figure>
           <img src="/KevFlix-logo.png" alt="KevFlix Logo" title='KevFlix' className='w-20' />
