@@ -77,15 +77,10 @@ export default function MovieDetails() {
           </button>
         </form>
         <div className="flex justify-center items-center w-full">
-          <iframe
-            className="rounded-lg"
-            width="640"
-            height="360"
-            src="/images/video.mp4"
-            title="Video player"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+        <video className="rounded-lg" width="640" height="360" controls>
+              <source src="/images/video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
         </div>
       </div>
     </dialog>

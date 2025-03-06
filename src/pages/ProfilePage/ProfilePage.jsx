@@ -3,7 +3,7 @@ import "../../App.css";
 function ProfilePage() {
   return (
     <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
-      <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto calc-width">
+      <div className="hero-content flex flex-col items-center justify-center text-center lg:text-left lg:flex-row lg:m-auto calc-width">
         <div className="flex flex-col items-center lg:items-center">
           <img
             src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
