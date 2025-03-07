@@ -12,7 +12,7 @@ export default function MovieDetails() {
           <div className="flex justify-center lg:justify-start mt-4">
             <button
               className="btn btn-primary mr-4"
-              onClick={() => document.getElementById("my_modal_3").showModal()}
+              onClick={() => document.getElementById("video-modal").showModal()}
               title="Play"
             >
               <svg
@@ -83,7 +83,7 @@ export default function MovieDetails() {
       </div>
 
       {/* Modal */}
-      <dialog id="my_modal_3" className="modal">
+      <dialog id="video-modal" className="modal">
         <div className="modal-box w-[90%] max-w-2xl flex flex-col items-center">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hover:text-primary-color" title="Close">

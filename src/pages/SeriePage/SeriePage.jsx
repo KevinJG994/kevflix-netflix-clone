@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from "react";
 import "../../App.css";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import serieService from "../../services/series.service";
+import Loading from "../../components/Loading/Loading";
 
 export default function SeriePage() {
   const [series, setSeries] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     serieService
       .getAllSeries()
       .then((response) => {
         setSeries(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorDescription = error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
+        setIsLoading(false);
       });
   }, []);
 
@@ -26,10 +30,12 @@ export default function SeriePage() {
       </h2>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+      
+      {isLoading ? (
+        <Loading />
+      ) : (
       <div className="calc-width">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
           {series.map((item, index) => (
             <Link to="/movieDetails">
               <div key={index} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
@@ -52,6 +58,7 @@ export default function SeriePage() {
           ))}
         </div>
       </div>
+    )}
     </div>
   );
 }

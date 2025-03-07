@@ -1,21 +1,25 @@
-import React, { useEffect, useState } from "react";
 import "../../App.css";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import movieService from "../../services/movies.service";
+import Loading from "../../components/Loading/Loading";
 
 export default function MoviePage() {
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     movieService
       .getAllMovies()
       .then((response) => {
         setMovies(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorDescription = error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
+        setIsLoading(false);
       });
   }, []);
 
@@ -26,7 +30,9 @@ export default function MoviePage() {
       </h2>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+      {isLoading ? (
+        <Loading />
+      ) : (
       <div className="calc-width">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
@@ -52,6 +58,7 @@ export default function MoviePage() {
           ))}
         </div>
       </div>
+    )}
     </div>
   );
 }

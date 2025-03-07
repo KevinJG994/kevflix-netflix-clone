@@ -4,9 +4,7 @@ const Loading = () => {
   return (
     <div className="wrapper">
       <div className="spinner">
-        <div className="bounce1"></div>
-        <div className="bounce2"></div>
-        <div className="bounce3"></div>
+        <span className="loading loading-ring text-primary w-60"></span>
       </div>
     </div>
   );
