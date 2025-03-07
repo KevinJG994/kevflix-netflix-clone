@@ -1,15 +1,13 @@
 import "./SignupPage.css";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
+// import axios from "axios";
 
-function SignupPage() {
+function SignupPage({ setShowLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
-
-  const navigate = useNavigate();
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -21,22 +19,22 @@ function SignupPage() {
     const requestBody = { email, password, name };
 
     // Send a request to the server using axios
-    /* 
-    const authToken = localStorage.getItem("authToken");
-    axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
-      requestBody, 
-      { headers: { Authorization: `Bearer ${authToken}` },
-    })
-    .then((response) => {})
-    */
+    
+    // const authToken = localStorage.getItem("authToken");
+    // axios.post(
+    //   `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
+    //   requestBody, 
+    //   { headers: { Authorization: `Bearer ${authToken}` },
+    // })
+    // .then((response) => {})
+    
 
     // Or using a service
     authService
       .signup(requestBody)
-      .then((response) => {
+      .then(() => {
+        setShowLogin(true)
         // If the POST request is successful redirect to the login page
-        navigate("/login");
       })
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
@@ -46,32 +44,39 @@ function SignupPage() {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
-
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
-
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-        <button type="submit">Sign Up</button>
-      </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+    <form className="card-body" onSubmit={handleSignupSubmit}>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text">Nombre</span>
+      </label>
+      <input type="text" placeholder="Nombre" className="input input-bordered" value={name} onChange={handleName}  required />
     </div>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text">Email</span>
+      </label>
+      <input type="email" placeholder="Email" className="input input-bordered" value={email} onChange={handleEmail} required />
+    </div>
+    <div className="form-control">
+      <label className="label">
+        <span className="label-text">Contraseña</span>
+      </label>
+      <input type="password" placeholder="Contraseña" className="input input-bordered" value={password}
+          onChange={handlePassword} required />
+    </div>
+    {/* <div className="form-control">
+      <label className="label">
+        <span className="label-text">Foto de perfil</span>
+      </label>
+      <input type="file" placeholder="Foto de perfil" className="input input-bordered" required />
+    </div> */}
+    <div className="form-control mt-6">
+      <button className="btn btn-primary">Crear cuenta</button>
+      <label className="label">
+        <a href="#" onClick={() => setShowLogin(true)} className="text-lg flex-auto my-2 label-text-alt link link-hover">¿Ya tienes cuenta? - <span className='text-primary-color'>Inicia sesión</span></a>
+      </label>
+    </div>
+  </form>
   );
 }
 

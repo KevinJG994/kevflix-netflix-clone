@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
+import SignupPage from "../SignupPage/SignupPage";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,10 +35,6 @@ function LoginPage() {
       });
   };
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    // Lógica para manejar el registro
-  };
 
   return (
     <div
@@ -85,38 +82,7 @@ function LoginPage() {
               </div>
             </form>
           ) : (
-            <form className="card-body" onSubmit={handleRegisterSubmit}>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Nombre</span>
-                </label>
-                <input type="text" placeholder="Nombre" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input type="email" placeholder="Email" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Contraseña</span>
-                </label>
-                <input type="password" placeholder="Contraseña" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Foto de perfil</span>
-                </label>
-                <input type="file" placeholder="Foto de perfil" className="input input-bordered" required />
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary">Crear cuenta</button>
-                <label className="label">
-                  <a href="#" onClick={() => setShowLogin(true)} className="text-lg flex-auto my-2 label-text-alt link link-hover">¿Ya tienes cuenta? - <span className='text-primary-color'>Inicia sesión</span></a>
-                </label>
-              </div>
-            </form>
+            <SignupPage setShowLogin={setShowLogin} />
           )}
         </div>
       </div>
