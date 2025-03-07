@@ -1,7 +1,7 @@
 import "./SignupPage.css";
 import { useState } from "react";
 import authService from "../../services/auth.service";
-// import axios from "axios";
+import axios from "axios";
 
 function SignupPage({ setShowLogin }) {
   const [email, setEmail] = useState("");
@@ -18,15 +18,17 @@ function SignupPage({ setShowLogin }) {
     // Create an object representing the request body
     const requestBody = { email, password, name };
 
+
+    const API_URL = process.env.REACT_APP_SERVER_URL
     // Send a request to the server using axios
     
-    // const authToken = localStorage.getItem("authToken");
-    // axios.post(
-    //   `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
-    //   requestBody, 
-    //   { headers: { Authorization: `Bearer ${authToken}` },
-    // })
-    // .then((response) => {})
+    const authToken = localStorage.getItem("authToken");
+    axios.post(
+      `${API_URL}/auth/signup`, 
+      requestBody, 
+      { headers: { Authorization: `Bearer ${authToken}` },
+    })
+    .then((response) => {})
     
 
     // Or using a service
