@@ -1,16 +1,16 @@
-import Card from "../../components/Card/Card";
 import Carrousel from "../../components/Carrousel/Carrousel";
+import CardMovie from "../../components/CardMovie/CardMovie";
+import CardSerie from "../../components/CardSerie/CardSerie";
 
 function HomePage() {
+
   return (
     <div className="flex min-h-screen calc-width-navbar">
       <div className="calc-width w-full">
         <Carrousel />
         <div className="p-6">
-          <h2 className="text-2xl font-bold my-8 flex">Nuestras Películas</h2>
-          <Card />
-          <h2 className="text-2xl font-bold my-8 flex">Nuestras Series</h2>
-          <Card />
+          <CardMovie/>
+          <CardSerie/>
         </div>
       </div>
     </div>
