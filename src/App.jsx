@@ -31,30 +31,19 @@ function App() {
       <div className="flex min-h-screen">
         {showSidebar && <Sidebar className="w-1/4" />}
           <Routes>
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/movies" element={<MoviePage />} />
-            <Route path="/series" element={<SeriePage />} />
-            <Route path="/favourites" element={<FavouritePage />} />
-            <Route path="/movieDetails/:movieId" element={<MovieDetails />} />
-            <Route path="/serieDetails/:serieId" element={<SerieDetails />} />
+            <Route path="/home" element={<IsPrivate> <HomePage /> </IsPrivate>} />
+            <Route path="/movies" element={<IsPrivate> <MoviePage /> </IsPrivate>} />
+            <Route path="/series" element={<IsPrivate> <SeriePage /> </IsPrivate>} />
+            <Route path="/favourites" element={ <IsPrivate> <FavouritePage /> </IsPrivate>} />
+            <Route path="/movieDetails/:movieId" element={<IsPrivate> <MovieDetails /> </IsPrivate>} />
+            <Route path="/serieDetails/:serieId" element={<IsPrivate> <SerieDetails /> </IsPrivate>} />
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/admin/createMovie" element={<MovieForm />} />
-            <Route path="/admin/editMovie/:movieId" element={<MovieForm />} />
-            <Route path="/admin/createSerie" element={<SerieForm />} />
-            <Route path="/admin/editSerie/:serieId" element={<SerieForm />} />
-            <Route path="/adminPanel" element={<SelectFormPage />} />
-       
-             
-           
-           <Route
-              path="/profile"
-              element={
-                <IsPrivate>
-                  <ProfilePage />
-                </IsPrivate>
-              }
-            /> 
+            <Route path="/admin/createMovie" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
+            <Route path="/admin/editMovie/:movieId" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
+            <Route path="/admin/createSerie" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
+            <Route path="/admin/editSerie/:serieId" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
+            <Route path="/adminPanel" element={<IsPrivate> <SelectFormPage /> </IsPrivate>} />
+            <Route path="/profile" element={<IsPrivate> <ProfilePage /> </IsPrivate>}/> 
 
             <Route
               path="/signup"
