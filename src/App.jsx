@@ -16,8 +16,9 @@ import FavouritePage from "./pages/FavouritePage/FavouritePage";
 import SeriePage from "./pages/SeriePage/SeriePage";
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import AdminForm from "./components/AdminForm/AdminForm";
+import MovieForm from "./components/MovieForm/MovieForm";
 import SerieDetails from "./pages/SerieDetails/SerieDetails";
+import SerieForm from "./components/SerieForm/SerieForm";
 
 function App() {
   const location = useLocation();
@@ -37,7 +38,12 @@ function App() {
             <Route path="/serieDetails/:serieId" element={<SerieDetails />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/createdElement" element={<AdminForm />} />
+            <Route path="/admin/createMovie" element={<MovieForm />} />
+            <Route path="/admin/editMovie/:movieId" element={<MovieForm />} />
+            <Route path="/admin/createSerie" element={<SerieForm />} />
+            <Route path="/admin/editSerie/:serieId" element={<SerieForm />} />
+       
+             
            
            <Route
               path="/profile"
