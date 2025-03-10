@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../App.css";
+import movieService from "../../services/movies.service";
+import { useParams } from "react-router-dom";
+
 export default function MovieDetails() {
+
+  const [movie, setMovie] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(undefined);
+
+  const {movieId} = useParams()
+
+  useEffect(() => {
+      movieService
+        .getMovieById(movieId)
+        .then((response) => {
+          setMovie(response.data);
+        })
+        .catch((error) => {
+          const errorDescription = error.response?.data?.message || "An error occurred";
+          setErrorMessage(errorDescription);
+        });
+  }, [movieId]);
+
   return (
     <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
       <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20 calc-width">
         <div className="flex flex-col items-center lg:items-start">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+            src={movie.image}
             className="max-w-sm rounded-lg shadow-2xl"
           />
           <div className="flex justify-center lg:justify-start mt-4">
@@ -49,36 +70,37 @@ export default function MovieDetails() {
           </div>
         </div>
         <div className="lg:ml-10 mt-6 lg:mt-0 flex flex-col items-center lg:items-start">
-          <h1 className="text-4xl font-bold text-primary-color">Spiderman Homecoming</h1>
-          <p className="text-lg mt-2">Director: Jon Watts</p>
+          <h1 className="text-4xl font-bold text-primary-color">{movie.title}</h1>
+          <p className="text-lg mt-2">Director: {movie.director}</p>
           <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
 
             <div className="rating rating-lg rating-half w-28">
-              <input type="radio" name="rating-11" className="rating-hidden" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="0.5 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="1 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="1.5 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="2 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="2.5 star" defaultChecked disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="3 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="3.5 star"  disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="4 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="4.5 star" disabled/>
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="5 star" disabled/>
+              <input type="radio" name="rating-11" className="rating-hidden" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="0.5 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="1 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="1.5 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="2 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="2.5 star" defaultChecked disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="3 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="3.5 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="4 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="4.5 star" disabled />
+              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="5 star" disabled />
             </div>
 
             <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
-            <p className="text-lg">Duration: 2h 13m</p>
+            <p className="text-lg">Duración: {movie.duration} min.</p>
             <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
-            <p className="text-lg">Year: 2017</p>
+            <p className="text-lg">Productora: {movie.year}</p>
           </div>
           <p className="py-6 max-w-lg">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi. Provident cupiditate voluptatem et in. Quaerat fugiat ut
-            assumenda excepturi exercitationem quasi. In deleniti eaque aut
-            repudiandae et a id nisi.
+            {movie.synopsis}
           </p>
+          <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
+                    <p className="text-lg">Género: {movie.gender}</p>
+                    <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
+                    <p className="text-lg">Año: {movie.year}</p>
+                </div>
         </div>
       </div>
 

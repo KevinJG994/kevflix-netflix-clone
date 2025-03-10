@@ -36,21 +36,19 @@ export default function CardMovie() {
       <div className="calc-width">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-          {movies.map((item, index) => (
-            <Link to="/movieDetails">
-              <div key={index} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
+          {movies.map((movie) => (
+            <Link to={`/movieDetails/${movie._id}`}>
+              <div key={movie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                 <figure className="w-full h-full">
                   <img
-                    src={item.image}
-                    alt={item.title}
+                    src={movie.image}
+                    alt={movie.title}
                     className="w-full h-full object-cover"
                   />
                 </figure>
                 <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white text-lg mb-2">{item.title}</p>
-                  <button className="bg-white text-black px-4 py-2 rounded-lg">
-                    {item.year}
-                  </button>
+                  <p className="text-white text-3xl mb-2">{movie.title}</p>
+                  <div className="badge badge-primary text-2xl w-auto h-auto"> {movie.year}</div>
                 </div>
               </div>
             </Link>
