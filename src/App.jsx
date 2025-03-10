@@ -19,6 +19,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import MovieForm from "./components/MovieForm/MovieForm";
 import SerieDetails from "./pages/SerieDetails/SerieDetails";
 import SerieForm from "./components/SerieForm/SerieForm";
+import SelectFormPage from "./pages/SelectFormPage/SelectFormPage";
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
             <Route path="/admin/editMovie/:movieId" element={<MovieForm />} />
             <Route path="/admin/createSerie" element={<SerieForm />} />
             <Route path="/admin/editSerie/:serieId" element={<SerieForm />} />
+            <Route path="/adminPanel" element={<SelectFormPage />} />
        
              
            

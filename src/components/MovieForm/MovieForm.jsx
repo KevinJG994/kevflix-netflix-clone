@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import movieService from '../../services/movies.service'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function MovieForm() {
     const [title, setTitle] = useState('')
@@ -15,6 +15,7 @@ export default function MovieForm() {
     const [year, setYear] = useState('')
     const [errorMessage, setErrorMessage] = useState(undefined);
 
+    const navigate = useNavigate()
     const { movieId } = useParams()
     const isEditing = (movieId)
 
@@ -52,6 +53,7 @@ export default function MovieForm() {
             .updateMovie(movieId, formData)
             .then((response) => {
                 console.log('Película editada:', response.data);
+                navigate(-1)
             })
             .catch((error) => {
                 const errorDescription = error.response?.data?.message || "An error occurred";
@@ -62,6 +64,7 @@ export default function MovieForm() {
             .createMovie(formData)
             .then((response) => {
                 console.log('Película creada:', response.data);
+                navigate("/movies")
             })
             .catch((error) => {
                 const errorDescription = error.response?.data?.message || "An error occurred";

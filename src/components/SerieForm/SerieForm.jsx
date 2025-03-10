@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import serieService from '../../services/series.service'
 
 export default function SerieForm() {
@@ -16,6 +16,7 @@ export default function SerieForm() {
     const [year, setYear] = useState('')
     const [errorMessage, setErrorMessage] = useState(undefined);
 
+    const navigate = useNavigate()
     const { serieId } = useParams()
     const isEditing = (serieId)
 
@@ -53,6 +54,7 @@ export default function SerieForm() {
             .updateSerie(serieId, formData)
             .then((response) => {
                 console.log('Serie editada:', response.data);
+                navigate(-1)
             })
             .catch((error) => {
                 const errorDescription = error.response?.data?.message || "An error occurred";
@@ -63,6 +65,7 @@ export default function SerieForm() {
             .createSerie(formData)
             .then((response) => {
                 console.log('Serie creada:', response.data);
+                navigate('/series')
             })
             .catch((error) => {
                 const errorDescription = error.response?.data?.message || "An error occurred";
