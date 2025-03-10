@@ -21,6 +21,8 @@ export default function SerieDetails() {
             });
     }, [serieId]);
 
+    const ratingValue = serie.rating / 0.5;
+
     return (
         <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
             <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20 calc-width">
@@ -71,37 +73,38 @@ export default function SerieDetails() {
                 <div className="lg:ml-10 mt-6 lg:mt-0 flex flex-col items-center lg:items-start">
                     <h1 className="text-4xl font-bold text-primary-color">{serie.title}</h1>
                     <p className="text-lg mt-2">Director: {serie.director}</p>
-
                     <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
+
+                        {/* Divide el rating por 0.5 para obtener el número de estrellas */}
                         <div className="rating rating-lg rating-half w-28">
-                            <input type="radio" name="rating-11" className="rating-hidden" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="0.5 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="1 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="1.5 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="2 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="2.5 star" defaultChecked disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="3 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="3.5 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="4 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="4.5 star" disabled />
-                            <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="5 star" disabled />
+                            {[...Array(10)].map((_, index) => (
+                                <input
+                                    key={index}
+                                    type="radio"
+                                    name="rating-11"
+                                    className={`mask mask-star-2 ${index % 2 === 0 ? "mask-half-1" : "mask-half-2"}`}
+                                    aria-label={`${(index + 1) / 2} star`}
+                                    disabled
+                                    checked={ratingValue === index + 1}
+                                />
+                            ))}
                         </div>
 
                         <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
                         <p className="text-lg">Temporadas: {serie.seasons}</p>
-                                      <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
+                        <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
                         <p className="text-lg">Capitulos: {serie.episodes}</p>
-                
+
 
                     </div>
                     <p className="py-6 max-w-lg">
                         {serie.synopsis}
                     </p>
                     <div className="flex flex-col items-center lg:flex-row lg:justify-center my-6 w-full space-y-2 lg:space-y-0">
-                    <p className="text-lg">Género: {serie.gender}</p>
-                    <div className="hidden mx-2 lg:block border-l-2 border-primary-color h-6"></div>
-                    <p className="text-lg">Año: {serie.year}</p>
-                </div>
+                        <p className="text-lg">Género: {serie.gender}</p>
+                        <div className="hidden mx-2 lg:block border-l-2 border-primary-color h-6"></div>
+                        <p className="text-lg">Año: {serie.year}</p>
+                    </div>
                 </div>
             </div>
 

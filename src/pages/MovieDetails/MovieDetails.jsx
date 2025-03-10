@@ -8,19 +8,21 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const {movieId} = useParams()
+  const { movieId } = useParams()
 
   useEffect(() => {
-      movieService
-        .getMovieById(movieId)
-        .then((response) => {
-          setMovie(response.data);
-        })
-        .catch((error) => {
-          const errorDescription = error.response?.data?.message || "An error occurred";
-          setErrorMessage(errorDescription);
-        });
+    movieService
+      .getMovieById(movieId)
+      .then((response) => {
+        setMovie(response.data);
+      })
+      .catch((error) => {
+        const errorDescription = error.response?.data?.message || "An error occurred";
+        setErrorMessage(errorDescription);
+      });
   }, [movieId]);
+
+  const ratingValue = movie.rating / 0.5;
 
   return (
     <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
@@ -73,19 +75,19 @@ export default function MovieDetails() {
           <h1 className="text-4xl font-bold text-primary-color">{movie.title}</h1>
           <p className="text-lg mt-2">Director: {movie.director}</p>
           <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
-
+            {/* Divide el rating por 0.5 para obtener el número de estrellas */}
             <div className="rating rating-lg rating-half w-28">
-              <input type="radio" name="rating-11" className="rating-hidden" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="0.5 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="1 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="1.5 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="2 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="2.5 star" defaultChecked disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="3 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="3.5 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="4 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-1" aria-label="4.5 star" disabled />
-              <input type="radio" name="rating-11" className="mask mask-star-2 mask-half-2" aria-label="5 star" disabled />
+              {[...Array(10)].map((_, index) => (
+                <input
+                  key={index}
+                  type="radio"
+                  name="rating-11"
+                  className={`mask mask-star-2 ${index % 2 === 0 ? "mask-half-1" : "mask-half-2"}`}
+                  aria-label={`${(index + 1) / 2} star`}
+                  disabled
+                  checked={ratingValue === index + 1}
+                />
+              ))}
             </div>
 
             <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
@@ -97,10 +99,10 @@ export default function MovieDetails() {
             {movie.synopsis}
           </p>
           <div className="flex flex-col items-center lg:flex-row lg:justify-around my-6 w-full space-y-2 lg:space-y-0">
-                    <p className="text-lg">Género: {movie.gender}</p>
-                    <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
-                    <p className="text-lg">Año: {movie.year}</p>
-                </div>
+            <p className="text-lg">Género: {movie.gender}</p>
+            <div className="hidden lg:block border-l-2 border-primary-color h-6"></div>
+            <p className="text-lg">Año: {movie.year}</p>
+          </div>
         </div>
       </div>
 
