@@ -30,39 +30,26 @@ function App() {
       <Navbar />
       <div className="flex min-h-screen">
         {showSidebar && <Sidebar className="w-1/4" />}
-          <Routes>
-            <Route path="/home" element={<IsPrivate> <HomePage /> </IsPrivate>} />
-            <Route path="/movies" element={<IsPrivate> <MoviePage /> </IsPrivate>} />
-            <Route path="/series" element={<IsPrivate> <SeriePage /> </IsPrivate>} />
-            <Route path="/favourites" element={ <IsPrivate> <FavouritePage /> </IsPrivate>} />
-            <Route path="/movieDetails/:movieId" element={<IsPrivate> <MovieDetails /> </IsPrivate>} />
-            <Route path="/serieDetails/:serieId" element={<IsPrivate> <SerieDetails /> </IsPrivate>} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/admin/createMovie" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
-            <Route path="/admin/editMovie/:movieId" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
-            <Route path="/admin/createSerie" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
-            <Route path="/admin/editSerie/:serieId" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
-            <Route path="/adminPanel" element={<IsPrivate> <SelectFormPage /> </IsPrivate>} />
-            <Route path="/profile" element={<IsPrivate> <ProfilePage /> </IsPrivate>}/> 
 
-            <Route
-              path="/signup"
-              element={
-                <IsAnon>
-                  <SignupPage />
-                </IsAnon>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <IsAnon>
-                  <LoginPage />
-                </IsAnon>
-              }
-            />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/home" element={ <HomePage /> } />
+          <Route path="/movies" element={<IsPrivate> <MoviePage /> </IsPrivate>} />
+          <Route path="/series" element={<IsPrivate> <SeriePage /> </IsPrivate>} />
+          <Route path="/favourites" element={<IsPrivate> <FavouritePage /> </IsPrivate>} />
+          <Route path="/movieDetails/:movieId" element={<IsPrivate> <MovieDetails /> </IsPrivate>} />
+          <Route path="/serieDetails/:serieId" element={<IsPrivate> <SerieDetails /> </IsPrivate>} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/admin/createMovie" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
+          <Route path="/admin/editMovie/:movieId" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
+          <Route path="/admin/createSerie" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
+          <Route path="/admin/editSerie/:serieId" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
+          <Route path="/adminPanel" element={<IsPrivate> <SelectFormPage /> </IsPrivate>} />
+          <Route path="/profile" element={<IsPrivate> <ProfilePage /> </IsPrivate>} />
+
+          <Route path="/signup" element={<IsAnon> <SignupPage /> </IsAnon>} />
+          <Route path="/" element={<IsAnon> <LoginPage /> </IsAnon>} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

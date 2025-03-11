@@ -26,9 +26,9 @@ function Navbar() {
   return (
     <div className="navbar bg-base-300 fixed flex w-full z-20">
       <div className="flex-1">
-        <Link to='/Home' className="btn btn-ghost text-xl text-primary-color">
+        <p className="btn btn-ghost text-xl text-primary-color">
           KevFlix
-        </Link>
+        </p>
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">

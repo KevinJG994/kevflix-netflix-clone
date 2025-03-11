@@ -29,7 +29,7 @@ function LoginPage() {
       .then((response) => {
         storeToken(response.data.authToken);
         authenticateUser();
-        navigate("/Home");
+        navigate("/home");
       })
       .catch((error) => {
         const errorDescription = error.response?.data?.message || "An error occurred";
