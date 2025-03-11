@@ -1,68 +1,38 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../App.css";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
+
 export default function FavouritePage() {
-  const movies = [
-    {
-      image:
-        "https://www.lavanguardia.com/peliculas-series/images/movie/poster/2024/3/w1280/6tJWxRfBKWGIPFkfLTod2CgCexU.jpg",
-      title: "Danmel",
-      year: "2024",
-    },
-    {
-      image:
-        "https://lumiere-a.akamaihd.net/v1/images/image_81e2d881.jpeg?region=0%2C0%2C540%2C810&width=320",
-      title: "Capitan America 4",
-      year: "2020",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR96g6yzjwSoAXveuHJQtozPKKWi74tKA2nqA&s",
-      title: "Thurderbolts",
-      year: "2014",
-    },
-    {
-      image:
-        "https://es.web.img3.acsta.net/c_310_420/img/c6/f8/c6f8e0d63437fb7df22483178e2d8f2c.jpg",
-      title: "Red One",
-      year: "2021",
-    },
-    {
-      image:
-        "https://www.lavanguardia.com/peliculas-series/images/movie/poster/2024/3/w1280/6tJWxRfBKWGIPFkfLTod2CgCexU.jpg",
-      title: "Danmel",
-      year: "2024",
-    },
-    {
-      image:
-        "https://lumiere-a.akamaihd.net/v1/images/image_81e2d881.jpeg?region=0%2C0%2C540%2C810&width=320",
-      title: "Capitan America 4",
-      year: "2020",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR96g6yzjwSoAXveuHJQtozPKKWi74tKA2nqA&s",
-      title: "Thurderbolts",
-      year: "2014",
-    },
-    {
-      image:
-        "https://es.web.img3.acsta.net/c_310_420/img/c6/f8/c6f8e0d63437fb7df22483178e2d8f2c.jpg",
-      title: "Red One",
-      year: "2021",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR96g6yzjwSoAXveuHJQtozPKKWi74tKA2nqA&s",
-      title: "Thurderbolts",
-      year: "2014",
-    },
-    {
-      image:
-        "https://es.web.img3.acsta.net/c_310_420/img/c6/f8/c6f8e0d63437fb7df22483178e2d8f2c.jpg",
-      title: "Red One",
-      year: "2021",
-    },
-  ];
+  const [favorites, setFavorites] = useState([]);
+
+  // Obtener el ID del usuario desde localStorage
+  const { userId } = useContext(AuthContext);
+
+  // Cargar favoritos desde localStorage usando una clave única para el usuario
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+    setFavorites(storedFavorites);
+  }, [userId]);
+
+  // Guardar favoritos en localStorage cuando cambian
+  useEffect(() => {
+    localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
+  }, [favorites, userId]);
+
+  const getItemType = (item) => {
+    if (item.type) {
+      return item.type;
+    }
+    // Verificar propiedades específicas para determinar el tipo
+    if (item.director && item.duration) {
+      return "movie";
+    }
+    if (item.seasons && item.episodes) {
+      return "serie";
+    }
+    return "unknown";
+  };
 
   return (
     <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
@@ -72,26 +42,25 @@ export default function FavouritePage() {
 
       <div className="calc-width">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {movies.map((item, index) => (
-            <div
-              key={index}
-              className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group"
-            >
-              <figure className="w-full h-full">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-              </figure>
-              <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white text-lg mb-2">{item.title}</p>
-                <button className="bg-white text-black px-4 py-2 rounded-lg">
-                  {item.year}
-                </button>
-              </div>
-            </div>
-          ))}
+          {favorites.map((item, index) => {
+            const itemType = getItemType(item);
+            return (
+              <Link to={itemType === "movie" ? `/movieDetails/${item._id}` : `/serieDetails/${item._id}`} key={index}>
+                <div key={index} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group" >
+                  <figure className="w-full h-full">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </figure>
+                  <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white text-3xl mb-2">{item.title}</p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

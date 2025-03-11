@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../App.css";
 import movieService from "../../services/movies.service";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import MovieForm from "../../components/MovieForm/MovieForm";
+import { AuthContext } from "../../context/auth.context";
 
 export default function MovieDetails() {
-
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState({});
+  const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { movieId } = useParams();
-
   const navigate = useNavigate();
 
+  // const userId = localStorage.getItem("userId");
+  const { userId } = useContext(AuthContext);
 
   useEffect(() => {
     movieService
@@ -24,20 +27,41 @@ export default function MovieDetails() {
         const errorDescription = error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
       });
-  }, [movieId]);
 
+    // Cargar favoritos desde localStorage
+    const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
+    setFavorites(storedFavorites);
+  }, [movieId, userId]);
+
+  // Verificar si la película está en favoritos cuando se cargan los favoritos
+  useEffect(() => {
+    const found = favorites.some((fav) => fav._id === movie._id);
+    setIsFavorite(found);
+  }, [favorites, movie._id]);
+
+  // Guardar favoritos en localStorage cuando cambian
+  useEffect(() => {
+    localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
+  }, [favorites, userId]);
+
+  const toggleFavorite = () => {
+    let updatedFavorites;
+    if (isFavorite) {
+      updatedFavorites = favorites.filter((fav) => fav._id !== movie._id);
+    } else {
+      updatedFavorites = [...favorites, movie];
+    }
+    setFavorites(updatedFavorites);
+  };
 
   const handleDelete = () => {
-    const isConfirmed = window.confirm("¿De verdad quieres eliminar esta película?")
-
+    const isConfirmed = window.confirm("¿De verdad quieres eliminar esta película?");
     if (isConfirmed) {
-      movieService
-        .deleteMovie(movieId)
-        .then(() => {
-          navigate("/Home");
-        })
-    };
-  }
+      movieService.deleteMovie(movieId).then(() => {
+        navigate("/Home");
+      });
+    }
+  };
 
   const ratingValue = movie.rating / 0.5;
 
@@ -75,6 +99,15 @@ export default function MovieDetails() {
               </svg>
             </button>
 
+            <button
+              className={`btn ${isFavorite ? "btn-primary" : "btn-outline btn-primary"} mx-2`}
+              onClick={toggleFavorite}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+              </svg>
+
+            </button>
           </div>
         </div>
         <div className="lg:ml-10 mt-6 lg:mt-0 flex flex-col items-center lg:items-start">
