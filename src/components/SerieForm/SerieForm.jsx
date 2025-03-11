@@ -78,26 +78,44 @@ export default function SerieForm() {
             <form className="card-body" onSubmit={handleSubmit}>
                 <div className="flex gap-4">
                     <div className="form-control w-1/2">
+                    <label className="label">
+                        <span className="label-text">Titulo</span>
+                    </label>
                         <input type="text" placeholder="Titulo" className="input input-bordered" onChange={(e) => setTitle(e.target.value)} value={title} required />
                     </div>
 
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Director</span>
+                        </label>
                         <input type="text" placeholder="Director" className="input input-bordered" onChange={(e) => setDirector(e.target.value)} value={director} required />
                     </div>
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Puntuación</span>
+                        </label>
                         <input type="number" placeholder="Puntuacion" className="input input-bordered" onChange={(e) => setRating(e.target.value)} value={rating} required />
                     </div>
                 </div>
 
                 <div className="flex gap-4 mt-4">
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Temporadas</span>
+                        </label>
                         <input type="number" placeholder="Temporadas" className="input input-bordered" onChange={(e) => setSeasons(e.target.value)} value={seasons} required />
                     </div>
 
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Episodios</span>
+                        </label>
                         <input type="number" placeholder="Episodios" className="input input-bordered" onChange={(e) => setEpisodes(e.target.value)} value={episodes} required />
                     </div>
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Año</span>
+                        </label>
                         <input type="number" placeholder="Año" className="input input-bordered" onChange={(e) => setYear(e.target.value)} value={year} required />
                     </div>
                 </div>
@@ -131,7 +149,7 @@ export default function SerieForm() {
                 </div>
 
                 <div className="form-control mt-6">
-                    <button className="btn btn-primary">Añadir Serie</button>
+                    <button className="btn btn-primary">{isEditing ? 'Editar Serie' : 'Añadir Serie'}</button>
                 </div>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>

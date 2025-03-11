@@ -5,7 +5,6 @@ import MovieForm from "../../components/MovieForm/MovieForm";
 
 export default function SelectFormPage() {
     return (
-
         <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box m-auto">
         <legend className="fieldset-legend">Panel de administrador</legend>
   

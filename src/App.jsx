@@ -39,10 +39,6 @@ function App() {
           <Route path="/movieDetails/:movieId" element={<IsPrivate> <MovieDetails /> </IsPrivate>} />
           <Route path="/serieDetails/:serieId" element={<IsPrivate> <SerieDetails /> </IsPrivate>} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/admin/createMovie" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
-          <Route path="/admin/editMovie/:movieId" element={<IsPrivate> <MovieForm /> </IsPrivate>} />
-          <Route path="/admin/createSerie" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
-          <Route path="/admin/editSerie/:serieId" element={<IsPrivate> <SerieForm /> </IsPrivate>} />
           <Route path="/adminPanel" element={<IsPrivate> <SelectFormPage /> </IsPrivate>} />
           <Route path="/profile" element={<IsPrivate> <ProfilePage /> </IsPrivate>} />
 
