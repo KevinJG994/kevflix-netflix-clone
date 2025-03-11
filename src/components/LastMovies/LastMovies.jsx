@@ -1,19 +1,19 @@
 import "../../App.css";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import serieService from "../../services/series.service";
+import movieService from "../../services/movies.service";
 import Loading from "../../components/Loading/Loading";
 
-export default function CardSerie() {
-  const [series, setSeries] = useState([]);
+export default function LastMovies() {
+  const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    serieService
-      .getAllSeries()
+    movieService
+      .getAllMovies()
       .then((response) => {
-        setSeries(response.data);
+        setMovies(response.data.slice(-4).reverse());
         setIsLoading(false);
       })
       .catch((error) => {
@@ -24,35 +24,33 @@ export default function CardSerie() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
+    <div className="flex flex-col p-10 m-auto">
       <h2 className="text-3xl mb-6 ml-12 text-center md:text-left">
-        Nuestras Series
+        Últimas Películas
       </h2>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
       {isLoading ? (
         <Loading />
       ) : (
         <div className="flex">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
-            {series.map((serie) => (
-              <Link to={`/serieDetails/${serie._id}`}>
-                <div key={serie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
+            {movies.map((movie) => (
+              <Link key={movie._id} to={`/movieDetails/${movie._id}`}>
+                <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                   <figure className="w-full h-full">
                     <img
-                      src={serie.image}
-                      alt={serie.title}
+                      src={movie.image}
+                      alt={movie.title}
                       className="w-full h-full object-cover"
                     />
                   </figure>
                   <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white text-3xl mb-2">{serie.title}</p>
-                    <div className="badge badge-primary text-2xl w-auto h-auto"> {serie.year}</div>
+                    <p className="text-white text-3xl mb-2">{movie.title}</p>
+                    <div className="badge badge-primary text-2xl w-auto h-auto"> {movie.year}</div>
                   </div>
                 </div>
               </Link>
-
             ))}
           </div>
         </div>

@@ -26,17 +26,17 @@ export default function CardMovie() {
   return (
     <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
       <h2 className="text-3xl mb-6 ml-12 text-center md:text-left">
-        Últimas Películas
+        Nuestras Películas
       </h2>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {isLoading ? (
         <Loading />
       ) : (
-      <div className="calc-width">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="flex">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
 
-          {movies.map((movie) => (
+          {movies.slice().reverse().map((movie) => (
             <Link to={`/movieDetails/${movie._id}`}>
               <div key={movie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                 <figure className="w-full h-full">

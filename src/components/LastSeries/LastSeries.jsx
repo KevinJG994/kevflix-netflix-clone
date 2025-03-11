@@ -13,7 +13,7 @@ export default function CardSerie() {
     serieService
       .getAllSeries()
       .then((response) => {
-        setSeries(response.data);
+        setSeries(response.data.slice(-4).reverse());
         setIsLoading(false);
       })
       .catch((error) => {
@@ -24,21 +24,20 @@ export default function CardSerie() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen p-10 mt-20 m-auto calc-width-navbar">
+    <div className="flex flex-col p-10 m-auto">
       <h2 className="text-3xl mb-6 ml-12 text-center md:text-left">
-        Nuestras Series
+        Últimas Series
       </h2>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
       {isLoading ? (
         <Loading />
       ) : (
         <div className="flex">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
             {series.map((serie) => (
-              <Link to={`/serieDetails/${serie._id}`}>
-                <div key={serie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
+              <Link key={serie._id} to={`/serieDetails/${serie._id}`}>
+                <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                   <figure className="w-full h-full">
                     <img
                       src={serie.image}
@@ -52,7 +51,6 @@ export default function CardSerie() {
                   </div>
                 </div>
               </Link>
-
             ))}
           </div>
         </div>
