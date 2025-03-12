@@ -178,10 +178,6 @@ export default function MovieDetails() {
              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
              allowFullScreen
            ></iframe>
-            {/* <video className="rounded-lg" width="640" height="360" controls>
-              <source src= type="video/mp4" />
-              Your browser does not support the video tag.
-            </video> */}
           </div>
         </div>
       </dialog>

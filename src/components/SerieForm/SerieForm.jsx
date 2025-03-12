@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import serieService from '../../services/series.service'
+import service from "../../services/file-upload.service";
 
 export default function SerieForm() {
     const [title, setTitle] = useState('')
     const [director, setDirector] = useState('')
     const [synopsis, setSynopsis] = useState('')
-    const [image, setImage] = useState('')
-    const [video, setVideo] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
+    const [videoUrl, setVideoUrl] = useState('')
     const [gender, setGender] = useState('')
     const [rating, setRating] = useState('')
     const [episodes, setEpisodes] = useState('')
@@ -27,8 +28,8 @@ export default function SerieForm() {
                     setTitle(serie.title);
                     setDirector(serie.director);
                     setSynopsis(serie.synopsis);
-                    setImage(serie.image);
-                    setVideo(serie.video);
+                    setImageUrl(serie.imageUrl);
+                    setVideoUrl(serie.videoUrl);
                     setGender(serie.gender);
                     setRating(serie.rating);
                     setSeasons(serie.seasons);
@@ -43,44 +44,66 @@ export default function SerieForm() {
     }, [isEditing, serieId]);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = { title, director, synopsis, gender, rating, seasons, episodes, year, image, video }
-
-        if (isEditing) {
-            serieService
-                .updateSerie(serieId, formData)
-                .then((response) => {
-                    console.log('Serie editada:', response.data);
-                    navigate(-1)
-                })
-                .catch((error) => {
-                    const errorDescription = error.response?.data?.message || "An error occurred";
-                    setErrorMessage(errorDescription);
-                });
-        } else {
-            serieService
-                .createSerie(formData)
-                .then((response) => {
-                    console.log('Serie creada:', response.data);
-                    navigate('/series')
-                })
-                .catch((error) => {
-                    const errorDescription = error.response?.data?.message || "An error occurred";
-                    setErrorMessage(errorDescription);
-                });
+        if (!imageUrl) {
+            alert("Espera a que la imagen se suba antes de enviar el formulario.");
+            return;
         }
-    }
+
+        const formData = { title, director, synopsis, gender, rating, seasons, episodes, year, imageUrl, videoUrl }
+
+        try {
+            if (isEditing) {
+                const response = await serieService.updateSerie(serieId, formData);
+                console.log("Serie editada:", response.data);
+            } else {
+                const response = await serieService.createSerie(formData);
+                console.log("Serie creada:", response.data);
+            }
+            navigate("/series");
+        } catch (error) {
+            const errorDescription = error.response?.data?.message || "An error occurred";
+            setErrorMessage(errorDescription);
+        }
+    };
+
+    const handleFileUpload = async (e) => {
+        const uploadData = new FormData();
+        uploadData.append("imageUrl", e.target.files[0]);
+
+        try {
+            const response = await service.uploadImageSerie(uploadData);
+            console.log("Image uploaded successfully:", response);
+            setImageUrl(response.fileUrl);
+        } catch (err) {
+            console.error("Error while uploading the file:", err);
+        }
+    };
+
+
+    const handleVideoUpload = async (e) => {
+        const uploadData = new FormData();
+        uploadData.append("videoUrl", e.target.files[0]);  // Aquí se sube el video
+
+        try {
+            const response = await service.uploadVideoSerie(uploadData);
+            console.log("Video uploaded successfully:", response);
+            setVideoUrl(response.fileUrl);  // Guarda la URL del video
+        } catch (err) {
+            console.error("Error while uploading the video:", err);
+        }
+    };
 
     return (
         <div className='flex m-auto items-center'>
             <form className="card-body" onSubmit={handleSubmit}>
                 <div className="flex gap-4">
                     <div className="form-control w-1/2">
-                    <label className="label">
-                        <span className="label-text">Titulo</span>
-                    </label>
+                        <label className="label">
+                            <span className="label-text">Titulo</span>
+                        </label>
                         <input type="text" placeholder="Titulo" className="input input-bordered" onChange={(e) => setTitle(e.target.value)} value={title} required />
                     </div>
 
@@ -140,11 +163,11 @@ export default function SerieForm() {
                     </div>
 
                     <div className="form-control w-1/2">
-                        <input type="text" placeholder="Portada" className="input input-bordered" onChange={(e) => setImage(e.target.value)} value={image} required />
+                        <input type="file" className="file-input file-input-primary" onChange={(e) => handleFileUpload(e)} />
                     </div>
 
                     <div className="form-control w-1/2">
-                        <input type="text" placeholder="Video" className="input input-bordered" onChange={(e) => setVideo(e.target.value)} value={video} required />
+                    <input type="file" className="file-input file-input-primary" accept="video/*" onChange={handleVideoUpload} />
                     </div>
                 </div>
 

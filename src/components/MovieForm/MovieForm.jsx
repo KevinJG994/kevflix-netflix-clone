@@ -160,14 +160,10 @@ export default function MovieForm() {
             </select>
           </div>
           <div className="form-control w-1/2">
-            <input type="file" onChange={(e) => handleFileUpload(e)} />
+            <input type="file" className="file-input file-input-primary" onChange={(e) => handleFileUpload(e)} />
           </div>
           <div className="form-control w-1/2">
-            <input
-              type="file"
-              accept="video/*"  // Para aceptar solo archivos de video
-              onChange={handleVideoUpload}  // Llama al manejador de subida de video
-            />
+            <input type="file" className="file-input file-input-primary" accept="video/*" onChange={handleVideoUpload} />
           </div>
         </div>
 

@@ -49,7 +49,7 @@ export default function FavouritePage() {
                 <div key={index} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group" >
                   <figure className="w-full h-full">
                     <img
-                      src={item.image}
+                      src={item.imageUrl}
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />

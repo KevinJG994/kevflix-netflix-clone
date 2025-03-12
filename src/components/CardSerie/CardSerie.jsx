@@ -41,7 +41,7 @@ export default function CardSerie() {
                 <div key={serie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                   <figure className="w-full h-full">
                     <img
-                      src={serie.image}
+                      src={serie.imageUrl}
                       alt={serie.title}
                       className="w-full h-full object-cover"
                     />

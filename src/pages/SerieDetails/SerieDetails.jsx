@@ -77,7 +77,7 @@ export default function SerieDetails() {
         <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
             <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20 calc-width">
                 <div className="flex flex-col items-center lg:items-start">
-                    <img src={serie.image} className="max-w-sm rounded-lg shadow-2xl" />
+                    <img src={serie.imageUrl} className="max-w-sm rounded-lg shadow-2xl" />
 
                     <div className="flex justify-center lg:justify-start mt-4">
                         <button className="btn btn-primary mr-4 w-36" onClick={() => document.getElementById("video-modal").showModal()} title="Play">
@@ -170,10 +170,15 @@ export default function SerieDetails() {
                         </button>
                     </form>
                     <div className="flex justify-center items-center w-full">
-                        <video className="rounded-lg" width="640" height="360" controls>
-                            <source src="/images/video.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
+                    <iframe
+             className="rounded-lg"
+             width="640"
+             height="360"
+             src={serie.videoUrl}
+             title={serie.videoUrl}
+             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+             allowFullScreen
+           ></iframe>
                     </div>
                 </div>
             </dialog>
