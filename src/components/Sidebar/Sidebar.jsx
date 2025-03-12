@@ -45,11 +45,9 @@ export default function Sidebar() {
                 </Link>
             </li>
 
-
             {isAdmin(user) && (
                 <>
                     <div className="divider divider-primary"></div>
-
                     <li>
                         <Link to="/adminPanel" className="tooltip tooltip-right my-6" data-tip="Created">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:text-primary-color">
