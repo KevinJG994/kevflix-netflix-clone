@@ -41,7 +41,7 @@ export default function CardMovie() {
               <div key={movie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                 <figure className="w-full h-full">
                   <img
-                    src={movie.image}
+                    src={movie.imageUrl}
                     alt={movie.title}
                     className="w-full h-full object-cover"
                   />

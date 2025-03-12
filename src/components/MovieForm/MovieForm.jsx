@@ -1,80 +1,103 @@
 import React, { useEffect, useState } from 'react'
 import movieService from '../../services/movies.service'
 import { useNavigate, useParams } from 'react-router-dom'
+import service from "../../services/file-upload.service";
 
 export default function MovieForm() {
-    const [title, setTitle] = useState('')
-    const [director, setDirector] = useState('')
-    const [synopsis, setSynopsis] = useState('')
-    const [producer, setProducer] = useState('')
-    const [image, setImage] = useState('')
-    const [video, setVideo] = useState('')
-    const [gender, setGender] = useState('')
-    const [rating, setRating] = useState('')
-    const [duration, setDuration] = useState('')
-    const [year, setYear] = useState('')
-    const [errorMessage, setErrorMessage] = useState(undefined);
+  const [title, setTitle] = useState('')
+  const [director, setDirector] = useState('')
+  const [synopsis, setSynopsis] = useState('')
+  const [producer, setProducer] = useState('')
+  const [imageUrl, setImageUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState('')
+  const [gender, setGender] = useState('')
+  const [rating, setRating] = useState('')
+  const [duration, setDuration] = useState('')
+  const [year, setYear] = useState('')
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
-    const navigate = useNavigate()
-    const { movieId } = useParams()
-    const isEditing = (movieId)
+  const navigate = useNavigate()
+  const { movieId } = useParams()
+  const isEditing = (movieId)
 
-    useEffect(() => {
-        if (isEditing) {
-          movieService.getMovieById(movieId)
-            .then(response => {
-              const movie = response.data;
-              setTitle(movie.title);
-              setDirector(movie.director);
-              setSynopsis(movie.synopsis);
-              setProducer(movie.producer);
-              setImage(movie.image);
-              setVideo(movie.video);
-              setGender(movie.gender);
-              setRating(movie.rating);
-              setDuration(movie.duration);
-              setYear(movie.year);
-            })
-            .catch(error => {
-              const errorDescription = error.response?.data?.message || "An error occurred";
-              setErrorMessage(errorDescription);
-            });
-        }
-      }, [isEditing, movieId]);
+  useEffect(() => {
+    if (isEditing) {
+      movieService.getMovieById(movieId)
+        .then(response => {
+          const movie = response.data;
+          setTitle(movie.title);
+          setDirector(movie.director);
+          setSynopsis(movie.synopsis);
+          setProducer(movie.producer);
+          setImageUrl(movie.imageUrl);
+          setVideoUrl(movie.videoUrl);
+          setGender(movie.gender);
+          setRating(movie.rating);
+          setDuration(movie.duration);
+          setYear(movie.year);
+        })
+        .catch(error => {
+          const errorDescription = error.response?.data?.message || "An error occurred";
+          setErrorMessage(errorDescription);
+        });
+    }
+  }, [isEditing, movieId]);
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        const formData = { title, director, synopsis, producer, gender, rating, duration, year, image, video }
-
-        if (isEditing) { 
-        movieService
-            .updateMovie(movieId, formData)
-            .then((response) => {
-                console.log('Película editada:', response.data);
-                navigate(-1)
-            })
-            .catch((error) => {
-                const errorDescription = error.response?.data?.message || "An error occurred";
-                setErrorMessage(errorDescription);
-            });
-        } else {
-            movieService
-            .createMovie(formData)
-            .then((response) => {
-                console.log('Película creada:', response.data);
-                navigate("/movies")
-            })
-            .catch((error) => {
-                const errorDescription = error.response?.data?.message || "An error occurred";
-                setErrorMessage(errorDescription);
-            });
-        }
+    if (!imageUrl) {
+      alert("Espera a que la imagen se suba antes de enviar el formulario.");
+      return;
     }
 
-    return (
- <div className='flex m-auto items-center'>
+    const formData = { title, director, synopsis, producer, gender, rating, duration, year, imageUrl, videoUrl };
+
+    try {
+      if (isEditing) {
+        const response = await movieService.updateMovie(movieId, formData);
+        console.log("Película editada:", response.data);
+      } else {
+        const response = await movieService.createMovie(formData);
+        console.log("Película creada:", response.data);
+      }
+      navigate("/movies");
+    } catch (error) {
+      const errorDescription = error.response?.data?.message || "An error occurred";
+      setErrorMessage(errorDescription);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    const uploadData = new FormData();
+    uploadData.append("imageUrl", e.target.files[0]);
+
+    try {
+      const response = await service.uploadImage(uploadData);
+      console.log("Image uploaded successfully:", response);
+      setImageUrl(response.fileUrl);
+    } catch (err) {
+      console.error("Error while uploading the file:", err);
+    }
+  };
+
+
+  const handleVideoUpload = async (e) => {
+    const uploadData = new FormData();
+    uploadData.append("videoUrl", e.target.files[0]);  // Aquí se sube el video
+
+    try {
+      const response = await service.uploadVideo(uploadData);
+      console.log("Video uploaded successfully:", response);
+      setVideoUrl(response.fileUrl);  // Guarda la URL del video
+    } catch (err) {
+      console.error("Error while uploading the video:", err);
+    }
+  };
+
+  return (
+    <div className='flex m-auto items-center'>
       <form className="card-body" onSubmit={handleSubmit}>
         <div className="flex gap-4">
           <div className="form-control w-1/2">
@@ -137,10 +160,14 @@ export default function MovieForm() {
             </select>
           </div>
           <div className="form-control w-1/2">
-            <input type="text" placeholder="Portada" className="input input-bordered" onChange={(e) => setImage(e.target.value)} value={image} required />
+            <input type="file" onChange={(e) => handleFileUpload(e)} />
           </div>
           <div className="form-control w-1/2">
-            <input type="text" placeholder="Video" className="input input-bordered" onChange={(e) => setVideo(e.target.value)} value={video} required />
+            <input
+              type="file"
+              accept="video/*"  // Para aceptar solo archivos de video
+              onChange={handleVideoUpload}  // Llama al manejador de subida de video
+            />
           </div>
         </div>
 

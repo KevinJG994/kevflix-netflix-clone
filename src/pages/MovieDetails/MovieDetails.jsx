@@ -75,7 +75,7 @@ export default function MovieDetails() {
     <div className="hero bg-base-100 min-h-screen flex flex-col items-center calc-width-navbar">
       <div className="hero-content flex flex-col items-center text-center lg:text-left lg:flex-row lg:m-auto sm:mt-20 calc-width">
         <div className="flex flex-col items-center lg:items-start">
-          <img src={movie.image} className="max-w-sm rounded-lg shadow-2xl" />
+          <img src={movie.imageUrl} className="max-w-sm rounded-lg shadow-2xl" />
 
           <div className="flex justify-center lg:justify-start mt-4">
             <button className="btn btn-primary mr-4 w-36" onClick={() => document.getElementById("video-modal").showModal()} title="Play">
@@ -173,8 +173,8 @@ export default function MovieDetails() {
              className="rounded-lg"
              width="640"
              height="360"
-             src={movie.video}
-             title={movie.video}
+             src={movie.videoUrl}
+             title={movie.videoUrl}
              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
              allowFullScreen
            ></iframe>
