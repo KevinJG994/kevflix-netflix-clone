@@ -13,25 +13,28 @@ export default function Carrousel() {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % carrousel.length);
         }, 6000);
         return () => clearInterval(interval);
-    }, [carrousel.length]);
+    }, []);
 
     return (
-        <div className="carousel w-full">
-            {carrousel.map((item, index) => (
-                <div key={index} id={`slide${index + 1}`} className="carousel-item relative w-full" >
-                    <img
-                        src={item.image}
-                        className="w-full object-cover opacity-50" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                        <h2 className="text-4xl font-bold">{item.title}</h2>
-                        <p className="text-xl mx-32 text-center hidden md:block my-6">{item.subtitle}</p>
-                    </div>
-                    <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-                        <a href={`#slide${index === 0 ? carrousel.length : index}`} className="btn btn-circle"  onClick={() => setCurrentSlide((prevSlide) => (prevSlide - 1 + carrousel.length) % carrousel.length)}>❮</a>
-                        <a href={`#slide${index === carrousel.length - 1 ? 1 : index + 2}`} className="btn btn-circle" onClick={() => setCurrentSlide((prevSlide) => (prevSlide + 1) % carrousel.length)}>❯</a>
-                    </div>
-                </div>
-            ))}
+        <div className="carousel w-full h-[150px] md:h-[250px] lg:h-[350px] overflow-hidden relative">
+            <div 
+                className="flex w-full h-full transition-transform duration-1000 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)`, display: 'flex' }}
+            >
+                {carrousel.map((item, index) => (
+           <div key={index} className="w-full h-full flex-shrink-0 flex items-center justify-center relative">
+           <img src={item.image} className="w-full h-full object-cover opacity-50" />
+           <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+               <h2 className="text-4xl font-bold">{item.title}</h2>
+               <p className="text-xl mx-32 text-center hidden md:block my-6">{item.subtitle}</p>
+           </div>
+       </div>
+                ))}
+            </div>
+            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                <button className="btn btn-circle" onClick={() => setCurrentSlide((prevSlide) => (prevSlide - 1 + carrousel.length) % carrousel.length)}>❮</button>
+                <button className="btn btn-circle" onClick={() => setCurrentSlide((prevSlide) => (prevSlide + 1) % carrousel.length)}>❯</button>
+            </div>
         </div>
-    )
+    );
 }

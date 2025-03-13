@@ -8,7 +8,7 @@ function HomePage() {
     <div className="flex min-h-screen calc-width-navbar">
       <div className="calc-width w-full">
         <Carrousel />
-        <div className="">
+        <div className="container mx-auto mt-8">
          <LastMovies/>
          <LastSeries />
         </div>
