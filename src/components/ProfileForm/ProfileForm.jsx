@@ -39,7 +39,8 @@ export default function ProfileForm() {
         .updateUser(user._id, formData)
         .then((response) => {
           console.log('Usuario editado:', response.data);
-          navigate(-1);
+
+          navigate(0);
         })
         .catch((error) => {
           const errorDescription = error.response?.data?.message || "An error occurred";
