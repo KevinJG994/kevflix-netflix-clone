@@ -12,26 +12,26 @@ const errorHandler = (err) => {
 };
 
 const uploadImage = (file) => {
-    return api.post("/movies/upload", file)
+    return api.post("/api/movies/upload", file)
         .then(res => res.data)
         .catch(errorHandler);
 };
 
 const uploadVideo = (file) => {
-    return api.post("/movies/fileVideo", file)
+    return api.post("/api/movies/fileVideo", file)
         .then(res => res.data)
         .catch(errorHandler);
 };
 
 
 const uploadImageSerie = (file) => {
-    return api.post("/series/upload", file)
+    return api.post("/api/series/upload", file)
         .then(res => res.data)
         .catch(errorHandler);
 };
 
 const uploadVideoSerie = (file) => {
-    return api.post("/series/fileVideo", file)
+    return api.post("/api/series/fileVideo", file)
         .then(res => res.data)
         .catch(errorHandler);
 };
