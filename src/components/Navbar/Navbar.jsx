@@ -31,9 +31,13 @@ function Navbar() {
         </p>
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
-          <input type="text" placeholder="Buscar" className="input input-bordered w-24 md:w-auto" />
-        </div>
+        {isLoggedIn && profile && profile.name ? (
+          <div className="form-control">
+            <h2>{profile.name}</h2>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar hover:bg-primary-color">
             <div className="w-10 rounded-full bg-base-100">
