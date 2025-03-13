@@ -98,9 +98,9 @@ export default function SerieForm() {
 
     return (
         <div className='flex m-auto items-center'>
-            <form className="card-body" onSubmit={handleSubmit}>
+            <form className="card-body p-0 w-96" onSubmit={handleSubmit}>
                 <div className="flex gap-4">
-                    <div className="form-control w-1/2">
+                    <div className="form-control w-1/3">
                         <label className="label">
                             <span className="label-text">Titulo</span>
                         </label>
@@ -135,20 +135,18 @@ export default function SerieForm() {
                         </label>
                         <input type="number" placeholder="Episodios" className="input input-bordered" onChange={(e) => setEpisodes(e.target.value)} value={episodes} required />
                     </div>
-                    <div className="form-control w-1/2">
-                        <label className="label">
-                            <span className="label-text">Año</span>
-                        </label>
-                        <input type="number" placeholder="Año" className="input input-bordered" onChange={(e) => setYear(e.target.value)} value={year} required />
-                    </div>
+
                 </div>
 
                 <div className="form-control mt-4">
-                    <textarea placeholder="Sinopsis" className="textarea textarea-bordered h-40 w-full resize-none" onChange={(e) => setSynopsis(e.target.value)} value={synopsis} required />
+                    <textarea placeholder="Sinopsis" className="textarea textarea-bordered h-20 w-full resize-none" onChange={(e) => setSynopsis(e.target.value)} value={synopsis} required />
                 </div>
 
                 <div className="flex gap-4 mt-4">
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Género</span>
+                        </label>
                         <select placeholder='Género' className="select select-primary" onChange={(e) => setGender(e.target.value)} value={gender} required>
                             <option value="" disabled>Género</option>
                             <option value="Terror">Terror</option>
@@ -161,13 +159,26 @@ export default function SerieForm() {
                             <option value="Drama">Drama</option>
                         </select>
                     </div>
-
                     <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Año</span>
+                        </label>
+                        <input type="number" placeholder="Año" className="input input-bordered" onChange={(e) => setYear(e.target.value)} value={year} required />
+                    </div>
+                </div>
+                <div className="flex gap-4 mt-4">
+                    <div className="form-control w-1/2">
+                        <label className="label">
+                            <span className="label-text">Portada</span>
+                        </label>
                         <input type="file" className="file-input file-input-primary" onChange={(e) => handleFileUpload(e)} />
                     </div>
 
                     <div className="form-control w-1/2">
-                    <input type="file" className="file-input file-input-primary" accept="video/*" onChange={handleVideoUpload} />
+                        <label className="label">
+                            <span className="label-text">Video</span>
+                        </label>
+                        <input type="file" className="file-input file-input-primary" accept="video/*" onChange={handleVideoUpload} />
                     </div>
                 </div>
 

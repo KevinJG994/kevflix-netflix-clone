@@ -12,7 +12,7 @@ export default function SelectFormPage() {
           <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-outline btn-primary m-10" onClick={() => document.getElementById('movie-modal').showModal()}>Películas</button>
           
           <dialog id="movie-modal" className="modal">
-            <div className="modal-box w-full max-w-3xl">
+            <div className="modal-box w-full max-w-4xl p-6">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
               </form>
@@ -23,7 +23,7 @@ export default function SelectFormPage() {
           <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl btn-outline btn-primary m-10" onClick={() => document.getElementById('serie-modal').showModal()}>Series</button>
           
           <dialog id="serie-modal" className="modal">
-            <div className="modal-box w-full max-w-3xl">
+            <div className="modal-box w-full max-w-4xl p-6">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
               </form>
