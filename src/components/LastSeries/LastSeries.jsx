@@ -47,7 +47,7 @@ export default function CardSerie() {
                   </figure>
                   <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white text-3xl mb-2">{serie.title}</p>
-                    <div className="badge badge-primary text-2xl w-auto h-auto"> {serie.year}</div>
+                    <div className="badge badge-primary text-2xl w-auto h-auto"> {serie.seasons} Temporadas</div>
                   </div>
                 </div>
               </Link>
