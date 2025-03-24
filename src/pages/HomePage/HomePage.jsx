@@ -1,4 +1,5 @@
 import Carrousel from "../../components/Carrousel/Carrousel";
+import Chatbot from "../../components/ChatBot/Chatbot";
 import LastMovies from "../../components/LastMovies/LastMovies";
 import LastSeries from "../../components/LastSeries/LastSeries";
 
@@ -11,6 +12,7 @@ function HomePage() {
         <div className="container mx-auto mt-8">
          <LastMovies/>
          <LastSeries />
+         <Chatbot />
         </div>
       </div>
     </div>
