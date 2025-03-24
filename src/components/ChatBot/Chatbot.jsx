@@ -16,7 +16,7 @@ const Chatbot = () => {
 
     try {
       // Llama al endpoint del backend
-      const response = await axios.post("http://localhost:5005/api/ai/chat", {
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL || "http://localhost:5005", {
         prompt: input,
       });
 
