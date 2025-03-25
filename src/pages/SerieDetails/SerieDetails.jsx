@@ -4,7 +4,7 @@ import serieService from "../../services/series.service";
 import { useNavigate, useParams } from "react-router-dom";
 import SerieForm from "../../components/SerieForm/SerieForm";
 import { AuthContext } from "../../context/auth.context";
-
+import userService from "../../services/users.service";
 
 export default function SerieDetails() {
     const [serie, setSerie] = useState({});
@@ -16,7 +16,6 @@ export default function SerieDetails() {
     const navigate = useNavigate();
 
     // Obtener el ID del usuario desde el contexto de autenticación
-    const { userId } = useContext(AuthContext);
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
@@ -29,31 +28,60 @@ export default function SerieDetails() {
                 const errorDescription = error.response?.data?.message || "An error occurred";
                 setErrorMessage(errorDescription);
             });
-
-        // Cargar favoritos desde localStorage usando una clave única para el usuario
-        const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
-        setFavorites(storedFavorites);
-    }, [serieId, userId]);
+    }, [serieId]);
 
     // Verificar si la serie está en favoritos cuando se cargan los favoritos
     useEffect(() => {
-        const found = favorites.some((fav) => fav._id === serie._id);
-        setIsFavorite(found);
-    }, [favorites, serie._id]);
+        const fetchFavorites = async () => {
+            try {
+                if (!user?._id) {
+                    console.error("El user._id no está definido.");
+                    return;
+                }
+
+                const response = await userService.getFavouriteSeries(user._id);
+                setFavorites(response.data);
+
+                // Verificar si la serie actual está en favoritos
+                const found = response.data.some((fav) => fav._id === serie._id);
+                setIsFavorite(found);
+            } catch (error) {
+                console.error("Error al obtener los favoritos:", error);
+            }
+        };
+
+        fetchFavorites();
+    }, [user, serie._id]);
 
     // Guardar favoritos en localStorage cuando cambian
-    useEffect(() => {
-        localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
-    }, [favorites, userId]);
+    const toggleFavorite = async () => {
+        try {
+            if (!user?._id) {
+                console.error("El user._id no está definido.");
+                return;
+            }
 
-    const toggleFavorite = () => {
-        let updatedFavorites;
-        if (isFavorite) {
-            updatedFavorites = favorites.filter((fav) => fav._id !== serie._id);
-        } else {
-            updatedFavorites = [...favorites, serie];
+            if (isFavorite) {
+                // Eliminar de favoritos
+                await userService.removeFavouriteSerie(user._id, serie._id);
+                const updatedFavorites = favorites.filter((fav) => fav._id !== serie._id);
+                setFavorites(updatedFavorites);
+
+                console.log(`Eliminando serie ${serie._id} de favoritos`);
+            } else {
+                // Agregar a favoritos
+                await userService.addFavouriteSerie(user._id, serie._id);
+                const updatedFavorites = [...favorites, serie];
+                setFavorites(updatedFavorites);
+
+                console.log(`Agregando serie ${serie._id} a favoritos`);
+            }
+
+            // Cambiar el estado de favorito
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            console.error("Error al agregar/eliminar de favoritos:", error);
         }
-        setFavorites(updatedFavorites);
     };
 
     const handleDelete = () => {
@@ -120,7 +148,7 @@ export default function SerieDetails() {
                             </>
                         )}
 
-                      
+
                     </div>
                 </div>
                 <div className="lg:ml-10 mt-6 lg:mt-0 flex flex-col items-center lg:items-start">
@@ -170,15 +198,15 @@ export default function SerieDetails() {
                         </button>
                     </form>
                     <div className="flex justify-center items-center w-full">
-                    <iframe
-             className="rounded-lg"
-             width="640"
-             height="360"
-             src={serie.videoUrl}
-             title={serie.videoUrl}
-             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-             allowFullScreen
-           ></iframe>
+                        <iframe
+                            className="rounded-lg"
+                            width="640"
+                            height="360"
+                            src={serie.videoUrl}
+                            title={serie.videoUrl}
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
                     </div>
                 </div>
             </dialog>

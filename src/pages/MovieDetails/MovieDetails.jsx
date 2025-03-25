@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../App.css";
 import movieService from "../../services/movies.service";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MovieForm from "../../components/MovieForm/MovieForm";
 import { AuthContext } from "../../context/auth.context";
+import userService from "../../services/users.service";
 
 export default function MovieDetails() {
   const [movie, setMovie] = useState({});
@@ -14,8 +15,6 @@ export default function MovieDetails() {
   const { movieId } = useParams();
   const navigate = useNavigate();
 
-  // const userId = localStorage.getItem("userId");
-  const { userId } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -28,31 +27,63 @@ export default function MovieDetails() {
         const errorDescription = error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
       });
-
-    // Cargar favoritos desde localStorage
-    const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${userId}`)) || [];
-    setFavorites(storedFavorites);
-  }, [movieId, userId]);
+  }, [movieId]);
 
   // Verificar si la película está en favoritos cuando se cargan los favoritos
   useEffect(() => {
-    const found = favorites.some((fav) => fav._id === movie._id);
-    setIsFavorite(found);
-  }, [favorites, movie._id]);
+    // Obtener los favoritos del usuario y verificar si la película está en favoritos
+    const fetchFavorites = async () => {
+      try {
+        if (!user?._id) {
+          console.error("El user._id no está definido.");
+          return;
+        }
 
-  // Guardar favoritos en localStorage cuando cambian
-  useEffect(() => {
-    localStorage.setItem(`favorites_${userId}`, JSON.stringify(favorites));
-  }, [favorites, userId]);
+        const response = await userService.getFavouriteMovies(user._id);
+        setFavorites(response.data);
 
-  const toggleFavorite = () => {
-    let updatedFavorites;
-    if (isFavorite) {
-      updatedFavorites = favorites.filter((fav) => fav._id !== movie._id);
-    } else {
-      updatedFavorites = [...favorites, movie];
+        // Verificar si la película actual está en favoritos
+        const found = response.data.some((fav) => fav._id === movie._id);
+        setIsFavorite(found);
+      } catch (error) {
+        console.error("Error al obtener los favoritos:", error);
+      }
+    };
+
+    fetchFavorites();
+  }, [user, movie._id]);
+
+  // Guardar favoritos
+  const toggleFavorite = async () => {
+    try {
+      console.log("User ID:", user?._id); // Depuración: verifica si el user._id está definido
+
+      if (!user?._id) {
+        console.error("El user._id no está definido.");
+        return;
+      }
+
+      if (isFavorite) {
+        // Eliminar de favoritos
+        await userService.deleteFavouriteMovie(user._id, movie._id);
+        const updatedFavorites = favorites.filter((fav) => fav._id !== movie._id);
+        setFavorites(updatedFavorites);
+
+        console.log(`Eliminando película ${movie._id} de favoritos`);
+      } else {
+        // Agregar a favoritos
+        await userService.addFavouriteMovie(user._id, movie._id);
+        const updatedFavorites = [...favorites, movie];
+        setFavorites(updatedFavorites);
+
+        console.log(`Agregando película ${movie._id} a favoritos`);
+      }
+
+      // Cambiar el estado de favorito
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error("Error al agregar/eliminar de favoritos:", error);
     }
-    setFavorites(updatedFavorites);
   };
 
   const handleDelete = () => {
@@ -169,15 +200,15 @@ export default function MovieDetails() {
           </form>
           <div className="flex justify-center items-center w-full">
 
-          <iframe
-             className="rounded-lg"
-             width="640"
-             height="360"
-             src={movie.videoUrl}
-             title={movie.videoUrl}
-             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-             allowFullScreen
-           ></iframe>
+            <iframe
+              className="rounded-lg"
+              width="640"
+              height="360"
+              src={movie.videoUrl}
+              title={movie.videoUrl}
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </dialog>

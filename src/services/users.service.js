@@ -32,8 +32,37 @@ class UserService {
   // DELETE /auth/users/:id
   deleteUser = async (userId) => {
     return this.api.delete(`/auth/users/${userId}`);
-  } 
+  }
 
+  // POST /:userId/favouriteMovie/:movieId
+  addFavouriteMovie = async (userId, movieId) => {
+    return this.api.post(`/auth/users/${userId}/favouriteMovie/${movieId}`);
+  };
+
+  // GET /:userId/favouritesMovies
+  getFavouriteMovies = async (userId) => {
+    return this.api.get(`/auth/users/${userId}/favouritesMovies`);
+  };
+
+  // DELETE /:userId/favouriteMovie/:movieId
+  deleteFavouriteMovie = async (userId, movieId) => {
+    return this.api.delete(`/auth/users/${userId}/favouriteMovie/${movieId}`);
+  };
+
+  // POST /:userId/favouriteSerie/:serieId
+  addFavouriteSerie = async (userId, serieId) => {
+    return this.api.post(`/auth/users/${userId}/favouriteSerie/${serieId}`);
+  };
+
+  // GET /:userId/favouriteSeries
+  getFavouriteSeries = async (userId) => {
+    return this.api.get(`/auth/users/${userId}/favouriteSeries`);
+  };
+
+  // DELETE /:userId/favouriteSerie/:serieId
+  removeFavouriteSerie = async (userId, serieId) => {
+    return this.api.delete(`/auth/users/${userId}/favouriteSerie/${serieId}`);
+  };
 }
 
 // Create one instance of the service
