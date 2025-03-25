@@ -36,9 +36,9 @@ export default function CardMovie() {
       <div className="flex">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
 
-          {movies.slice().reverse().map((movie) => (
-            <Link to={`/movieDetails/${movie._id}`}>
-              <div key={movie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
+          {movies.slice().reverse().map((movie, index) => (
+            <Link key={movie._id || index} to={`/movieDetails/${movie._id}`}>
+              <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                 <figure className="w-full h-full">
                   <img
                     src={movie.imageUrl}

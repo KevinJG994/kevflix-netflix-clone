@@ -41,8 +41,8 @@ export default function Recommend() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
                         {/* Renderizar películas */}
 
-                        {recomendaciones?.recomendaciones?.peliculas?.map((movie) => (
-                            <Link key={movie._id} to={`/movieDetails/${movie._id}`}>
+                        {recomendaciones?.recomendaciones?.peliculas?.map((movie, index) => (
+                            <Link key={movie._id || index} to={`/movieDetails/${movie._id}`}>
                                 <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                                     <figure className="w-full h-full">
                                         <img
@@ -62,8 +62,8 @@ export default function Recommend() {
                         ))}
 
                         {/* Renderizar series */}
-                        {recomendaciones?.recomendaciones?.series?.map((serie) => (
-                            <Link key={serie._id} to={`/serieDetails/${serie._id}`}>
+                        {recomendaciones?.recomendaciones?.series?.map((serie, index) => (
+                            <Link key={serie._id || index} to={`/serieDetails/${serie._id}`}>
                                 <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                                     <figure className="w-full h-full">
                                         <img

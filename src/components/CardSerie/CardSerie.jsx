@@ -36,9 +36,9 @@ export default function CardSerie() {
       ) : (
         <div className="flex">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-auto">
-            {series.slice().reverse().map((serie) => (
-              <Link to={`/serieDetails/${serie._id}`}>
-                <div key={serie._id} className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
+            {series.slice().reverse().map((serie, index) => (
+              <Link key={serie._id || index}  to={`/serieDetails/${serie._id}`}>
+                <div className="relative w-full min-w-0 h-96 shadow-xl overflow-hidden group">
                   <figure className="w-full h-full">
                     <img
                       src={serie.imageUrl}
