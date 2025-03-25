@@ -16,10 +16,12 @@ class RecommendService {
     });
   }
 
-  // GET /api/ai/recomendations
-  getAllRecomendaciones = async () => {
-    return this.api.get("/api/ai/recomendations");
-  };
+  // GET /api/ai/recommend
+  getAllRecommend = async (userId) => {
+    return this.api.get("/api/ai/recommend", {
+      params: { userId }, // Pasar el userId como parámetro de consulta
+    });
+  }
 }
 
 // Crear una instancia única del servicio
