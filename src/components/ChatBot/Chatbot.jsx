@@ -29,7 +29,9 @@ const Chatbot = () => {
       // Extrae el texto del mensaje del bot
       let botMessageText = "";
       if (response.data.response.parts && response.data.response.parts[0]?.text) {
-        botMessageText = response.data.response.parts[0].text;
+        botMessageText = response.data.response.parts[0].text
+            .replace(/\\n/g, '\n')  // Reemplaza "\n" escrito como texto por un salto real
+            .replace(/\n\n+/g, '\n\n'); // Elimina saltos de línea extra
       } else {
         botMessageText = "No se pudo obtener una respuesta válida del bot.";
       }
@@ -54,7 +56,7 @@ const Chatbot = () => {
             key={index}
             className={`mb-3 text-${msg.sender === "user" ? "right" : "left"}`}
           >
-            <p className={`text-sm ${msg.sender === "user" ? "text-primary-color text-right" : "text-gray-800 text-left"}`}>
+            <p className={`text-sm ${msg.sender === "user" ? "text-primary-color text-right" : "text-gray-800 text-left whitespace-pre-line"}`}>
               <strong>{msg.sender === "user" ? "Tú" : "BotFlix"}:</strong> {msg.text}
             </p>
           </div>
